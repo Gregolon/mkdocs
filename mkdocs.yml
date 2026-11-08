@@ -1,0 +1,28 @@
+site_name: Documentação do PSP Legacy | Archive
+site_description: Arquitetura (C4 Model) e regras de negócio do site PSP Legacy
+site_url: https://github.com/Gregolon/mkdocs
+
+theme:
+  name: material
+  language: pt-BR
+  features:
+    - navigation.sections
+    - content.code.copy
+
+nav:
+  - Home: index.md
+  - Arquitetura: arquitetura.md
+  - Regras e Fluxos: regras.md
+
+markdown_extensions:
+  - admonition
+  - attr_list
+  - toc:
+      permalink: true
+  - pymdownx.tasklist:
+      custom_checkbox: true
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:pymdownx.superfences.fence_code_format
