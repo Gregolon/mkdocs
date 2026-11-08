@@ -1,8 +1,8 @@
 # Regras de negócio e fluxos
 
-**Módulo:** Cadastro de assinantes da newsletter
-**Autor:** Vinícius Gregolon
-**Status:** em desenvolvimento
+- **Módulo:** Cadastro de assinantes da newsletter
+- **Autor:** Vinícius Gregolon
+- **Status:** em desenvolvimento
 
 ## 1. Visão geral
 
