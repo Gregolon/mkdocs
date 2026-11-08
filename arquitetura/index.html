@@ -1,0 +1,917 @@
+
+<!doctype html>
+<html lang="pt" class="no-js">
+  <head>
+    
+      <meta charset="utf-8">
+      <meta name="viewport" content="width=device-width,initial-scale=1">
+      
+        <meta name="description" content="Arquitetura (C4 Model) e regras de negócio do site PSP Legacy">
+      
+      
+      
+        <link rel="canonical" href="https://github.com/Gregolon/mkdocs/arquitetura/">
+      
+      
+        <link rel="prev" href="..">
+      
+      
+        <link rel="next" href="../regras/">
+      
+      
+        
+      
+      
+      <link rel="icon" href="../assets/images/favicon.png">
+      <meta name="generator" content="mkdocs-1.6.1, mkdocs-material-9.8.1">
+    
+    
+      
+        <title>Arquitetura - Documentação do PSP Legacy | Archive</title>
+      
+    
+    
+      <link rel="stylesheet" href="../assets/stylesheets/main.57a0d79d.min.css">
+      
+      
+
+
+    
+    
+      
+    
+    
+      
+        
+        
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link rel="stylesheet" href="https://fonts.googleapis.com/css?family=Roboto:300,300i,400,400i,700,700i%7CRoboto+Mono:400,400i,700,700i&display=fallback">
+        <style>:root{--md-text-font:"Roboto";--md-code-font:"Roboto Mono"}</style>
+      
+    
+    
+    <script>__md_scope=new URL("..",location),__md_hash=e=>[...e].reduce(((e,_)=>(e<<5)-e+_.charCodeAt(0)),0),__md_get=(e,_=localStorage,t=__md_scope)=>JSON.parse(_.getItem(t.pathname+"."+e)),__md_set=(e,_,t=localStorage,a=__md_scope)=>{try{t.setItem(a.pathname+"."+e,JSON.stringify(_))}catch(e){}}</script>
+    
+      
+
+    
+    
+  </head>
+  
+  
+    <body dir="ltr">
+  
+    
+    <input class="md-toggle" data-md-toggle="drawer" type="checkbox" id="__drawer" autocomplete="off">
+    <input class="md-toggle" data-md-toggle="search" type="checkbox" id="__search" autocomplete="off">
+    <label class="md-overlay" for="__drawer"></label>
+    <div data-md-component="skip">
+      
+        
+        <a href="#arquitetura" class="md-skip">
+          Pular para conteúdo
+        </a>
+      
+    </div>
+    <div data-md-component="announce">
+      
+    </div>
+    
+    
+      
+
+  
+
+<header class="md-header md-header--shadow" data-md-component="header">
+  <nav class="md-header__inner md-grid" aria-label="Cabeçalho">
+    <a href=".." title="Documentação do PSP Legacy | Archive" class="md-header__button md-logo" aria-label="Documentação do PSP Legacy | Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    <label class="md-header__button md-icon" for="__drawer">
+      
+      <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M3 6h18v2H3zm0 5h18v2H3zm0 5h18v2H3z"/></svg>
+    </label>
+    <div class="md-header__title" data-md-component="header-title">
+      <div class="md-header__ellipsis">
+        <div class="md-header__topic">
+          <span class="md-ellipsis">
+            Documentação do PSP Legacy | Archive
+          </span>
+        </div>
+        <div class="md-header__topic" data-md-component="header-topic">
+          <span class="md-ellipsis">
+            
+              Arquitetura
+            
+          </span>
+        </div>
+      </div>
+    </div>
+    
+    
+      <script>var palette=__md_get("__palette");if(palette&&palette.color){if("(prefers-color-scheme)"===palette.color.media){var media=matchMedia("(prefers-color-scheme: light)"),input=document.querySelector(media.matches?"[data-md-color-media='(prefers-color-scheme: light)']":"[data-md-color-media='(prefers-color-scheme: dark)']");palette.color.media=input.getAttribute("data-md-color-media"),palette.color.scheme=input.getAttribute("data-md-color-scheme"),palette.color.primary=input.getAttribute("data-md-color-primary"),palette.color.accent=input.getAttribute("data-md-color-accent")}for(var[key,value]of Object.entries(palette.color))document.body.setAttribute("data-md-color-"+key,value)}</script>
+    
+    
+    
+      
+      
+        <label class="md-header__button md-icon" for="__search">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        </label>
+        <div class="md-search" data-md-component="search" role="dialog">
+  <label class="md-search__overlay" for="__search"></label>
+  <div class="md-search__inner" role="search">
+    <form class="md-search__form" name="search">
+      <input type="text" class="md-search__input" name="query" aria-label="Buscar" placeholder="Buscar" autocapitalize="off" autocorrect="off" autocomplete="off" spellcheck="false" data-md-component="search-query" required>
+      <label class="md-search__icon md-icon" for="__search">
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M9.5 3A6.5 6.5 0 0 1 16 9.5c0 1.61-.59 3.09-1.56 4.23l.27.27h.79l5 5-1.5 1.5-5-5v-.79l-.27-.27A6.52 6.52 0 0 1 9.5 16 6.5 6.5 0 0 1 3 9.5 6.5 6.5 0 0 1 9.5 3m0 2C7 5 5 7 5 9.5S7 14 9.5 14 14 12 14 9.5 12 5 9.5 5"/></svg>
+        
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M20 11v2H8l5.5 5.5-1.42 1.42L4.16 12l7.92-7.92L13.5 5.5 8 11z"/></svg>
+      </label>
+      <nav class="md-search__options" aria-label="Pesquisar">
+        
+        <button type="reset" class="md-search__icon md-icon" title="Limpar" aria-label="Limpar" tabindex="-1">
+          
+          <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"/></svg>
+        </button>
+      </nav>
+      
+    </form>
+    <div class="md-search__output">
+      <div class="md-search__scrollwrap" tabindex="0" data-md-scrollfix>
+        <div class="md-search-result" data-md-component="search-result">
+          <div class="md-search-result__meta">
+            Inicializando busca
+          </div>
+          <ol class="md-search-result__list" role="presentation"></ol>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+      
+    
+    
+  </nav>
+  
+</header>
+    
+    <div class="md-container" data-md-component="container">
+      
+      
+        
+          
+        
+      
+      <main class="md-main" data-md-component="main">
+        <div class="md-main__inner md-grid">
+          
+            
+              
+              <div class="md-sidebar md-sidebar--primary" data-md-component="sidebar" data-md-type="navigation" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+
+
+<nav class="md-nav md-nav--primary" aria-label="Navegação" data-md-level="0">
+  <label class="md-nav__title" for="__drawer">
+    <a href=".." title="Documentação do PSP Legacy | Archive" class="md-nav__button md-logo" aria-label="Documentação do PSP Legacy | Archive" data-md-component="logo">
+      
+  
+  <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"><path d="M12 8a3 3 0 0 0 3-3 3 3 0 0 0-3-3 3 3 0 0 0-3 3 3 3 0 0 0 3 3m0 3.54C9.64 9.35 6.5 8 3 8v11c3.5 0 6.64 1.35 9 3.54 2.36-2.19 5.5-3.54 9-3.54V8c-3.5 0-6.64 1.35-9 3.54"/></svg>
+
+    </a>
+    Documentação do PSP Legacy | Archive
+  </label>
+  
+  <ul class="md-nav__list" data-md-scrollfix>
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href=".." class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Home
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+      
+      
+  
+  
+    
+  
+  
+  
+    <li class="md-nav__item md-nav__item--active">
+      
+      <input class="md-nav__toggle md-toggle" type="checkbox" id="__toc">
+      
+      
+        
+      
+      
+        <label class="md-nav__link md-nav__link--active" for="__toc">
+          
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura
+  
+
+    
+  </span>
+  
+  
+
+          <span class="md-nav__icon md-icon"></span>
+        </label>
+      
+      <a href="./" class="md-nav__link md-nav__link--active">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Arquitetura
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+      
+        
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nivel-1-diagrama-de-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nível 1: Diagrama de Contexto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nível 1: Diagrama de Contexto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pessoas-atores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pessoas (atores)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistema-em-foco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sistema em foco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistemas-externos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sistemas externos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacionamentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relacionamentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nivel-2-diagrama-de-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nível 2: Diagrama de Containers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nível 2: Diagrama de Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacionamentos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relacionamentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decisoes-de-arquitetura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decisões de arquitetura
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arquivos-para-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arquivos para download
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+      
+    </li>
+  
+
+    
+      
+      
+  
+  
+  
+  
+    <li class="md-nav__item">
+      <a href="../regras/" class="md-nav__link">
+        
+  
+  
+  <span class="md-ellipsis">
+    
+  
+    Regras e Fluxos
+  
+
+    
+  </span>
+  
+  
+
+      </a>
+    </li>
+  
+
+    
+  </ul>
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+            
+              
+              <div class="md-sidebar md-sidebar--secondary" data-md-component="sidebar" data-md-type="toc" >
+                <div class="md-sidebar__scrollwrap">
+                  <div class="md-sidebar__inner">
+                    
+
+<nav class="md-nav md-nav--secondary" aria-label="Índice">
+  
+  
+  
+    
+  
+  
+    <label class="md-nav__title" for="__toc">
+      <span class="md-nav__icon md-icon"></span>
+      Índice
+    </label>
+    <ul class="md-nav__list" data-md-component="toc" data-md-scrollfix>
+      
+        <li class="md-nav__item">
+  <a href="#nivel-1-diagrama-de-contexto" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nível 1: Diagrama de Contexto
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nível 1: Diagrama de Contexto">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#pessoas-atores" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Pessoas (atores)
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistema-em-foco" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sistema em foco
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#sistemas-externos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Sistemas externos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacionamentos" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relacionamentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#nivel-2-diagrama-de-containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Nível 2: Diagrama de Containers
+      
+    </span>
+  </a>
+  
+    <nav class="md-nav" aria-label="Nível 2: Diagrama de Containers">
+      <ul class="md-nav__list">
+        
+          <li class="md-nav__item">
+  <a href="#containers" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Containers
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#relacionamentos_1" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Relacionamentos
+      
+    </span>
+  </a>
+  
+</li>
+        
+          <li class="md-nav__item">
+  <a href="#decisoes-de-arquitetura" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Decisões de arquitetura
+      
+    </span>
+  </a>
+  
+</li>
+        
+      </ul>
+    </nav>
+  
+</li>
+      
+        <li class="md-nav__item">
+  <a href="#arquivos-para-download" class="md-nav__link">
+    <span class="md-ellipsis">
+      
+        Arquivos para download
+      
+    </span>
+  </a>
+  
+</li>
+      
+    </ul>
+  
+</nav>
+                  </div>
+                </div>
+              </div>
+            
+          
+          
+            <div class="md-content" data-md-component="content">
+              
+              <article class="md-content__inner md-typeset">
+                
+                  
+
+
+
+<h1 id="arquitetura">Arquitetura<a class="headerlink" href="#arquitetura" title="Permanent link">&para;</a></h1>
+<p>A arquitetura do PSP Legacy | Archive foi modelada com o C4 Model, usando os dois primeiros níveis:</p>
+<ul>
+<li><strong>Nível 1 (Contexto):</strong> o sistema no centro, com as pessoas e os sistemas externos que se relacionam com ele.</li>
+<li><strong>Nível 2 (Containers):</strong> o que existe dentro do sistema (aplicação, API, banco) e a tecnologia de cada parte.</li>
+</ul>
+<div class="admonition note">
+<p class="admonition-title">Elementos tracejados</p>
+<p>O site publicado hoje é estático. Os elementos com borda tracejada nos diagramas (Serviço de E-mail,
+API de Newsletter e Banco de Assinantes) são o caminho previsto para o cadastro da newsletter, descrito na
+página de <a href="../regras/">Regras e Fluxos</a>.</p>
+</div>
+<hr />
+<h2 id="nivel-1-diagrama-de-contexto">Nível 1: Diagrama de Contexto<a class="headerlink" href="#nivel-1-diagrama-de-contexto" title="Permanent link">&para;</a></h2>
+<p><img alt="Diagrama de Contexto, C4 Nível 1" src="../img/c4_nivel1_contexto.png" /></p>
+<h3 id="pessoas-atores">Pessoas (atores)<a class="headerlink" href="#pessoas-atores" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Ator</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Visitante / Fã de PSP</strong></td>
+<td>Pessoa interessada na história, nos jogos e na comunidade do PSP. Navega pelo acervo e assina a newsletter.</td>
+</tr>
+<tr>
+<td><strong>Mantenedor do Site</strong></td>
+<td>Responsável por atualizar o conteúdo e publicar novas versões.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sistema-em-foco">Sistema em foco<a class="headerlink" href="#sistema-em-foco" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Sistema</th>
+<th>Descrição</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>PSP Legacy | Archive</strong></td>
+<td>Site de arquivo sobre o Sony PSP: console, jogos essenciais, história, guia de hardware e cadastro na newsletter.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="sistemas-externos">Sistemas externos<a class="headerlink" href="#sistemas-externos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Sistema</th>
+<th>Papel na solução</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Vercel</strong></td>
+<td>Hospeda e distribui (CDN) as páginas do site via HTTPS.</td>
+</tr>
+<tr>
+<td><strong>YouTube</strong></td>
+<td>Hospeda o vídeo em destaque exibido na página inicial.</td>
+</tr>
+<tr>
+<td><strong>Google Imagens (gstatic)</strong></td>
+<td>Fornece a foto do console e as capas dos jogos.</td>
+</tr>
+<tr>
+<td><strong>Redes Sociais</strong></td>
+<td>Twitter, Instagram e YouTube, acessados por links no rodapé.</td>
+</tr>
+<tr>
+<td><strong>Serviço de E-mail</strong> <em>(a confirmar)</em></td>
+<td>Recebe os dados dos inscritos e envia a newsletter.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="relacionamentos">Relacionamentos<a class="headerlink" href="#relacionamentos" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Origem</th>
+<th>Destino</th>
+<th>Descrição</th>
+<th>Tecnologia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visitante</td>
+<td>PSP Legacy</td>
+<td>Consulta conteúdo e assina a newsletter</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>Mantenedor</td>
+<td>Vercel</td>
+<td>Publica novas versões</td>
+<td>Git push / deploy</td>
+</tr>
+<tr>
+<td>Vercel</td>
+<td>PSP Legacy</td>
+<td>Hospeda e entrega o site</td>
+<td>HTTPS / CDN</td>
+</tr>
+<tr>
+<td>PSP Legacy</td>
+<td>YouTube</td>
+<td>Incorpora o vídeo em destaque</td>
+<td>iframe / HTTPS</td>
+</tr>
+<tr>
+<td>PSP Legacy</td>
+<td>Google Imagens</td>
+<td>Carrega capas e imagens</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>PSP Legacy</td>
+<td>Redes Sociais</td>
+<td>Direciona para os perfis</td>
+<td>Links externos</td>
+</tr>
+<tr>
+<td>PSP Legacy</td>
+<td>Serviço de E-mail <em>(a confirmar)</em></td>
+<td>Envia dados do inscrito</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>Serviço de E-mail <em>(a confirmar)</em></td>
+<td>Visitante</td>
+<td>Entrega a newsletter</td>
+<td>E-mail</td>
+</tr>
+</tbody>
+</table>
+<hr />
+<h2 id="nivel-2-diagrama-de-containers">Nível 2: Diagrama de Containers<a class="headerlink" href="#nivel-2-diagrama-de-containers" title="Permanent link">&para;</a></h2>
+<p><img alt="Diagrama de Containers, C4 Nível 2" src="../img/c4_nivel2_containers.png" /></p>
+<h3 id="containers">Containers<a class="headerlink" href="#containers" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Container</th>
+<th>Tecnologia</th>
+<th>Responsabilidade</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Site Estático (Front-end)</strong></td>
+<td>HTML5, CSS3, JavaScript</td>
+<td>Páginas <code>psp.html</code> (home com destaque, vídeo, jogos essenciais, história e guia de hardware) e <code>newsletter.html</code> (formulário de inscrição). Executa no navegador do visitante.</td>
+</tr>
+<tr>
+<td><strong>API de Newsletter</strong> <em>(a confirmar)</em></td>
+<td>Vercel Serverless Function, Node.js</td>
+<td>Valida e registra a inscrição (nome, e-mail e modelo de PSP favorito) e aciona o envio de e-mail.</td>
+</tr>
+<tr>
+<td><strong>Banco de Assinantes</strong> <em>(a confirmar)</em></td>
+<td>Banco de dados (ex.: Vercel Postgres)</td>
+<td>Armazena nome, e-mail e modelo de PSP favorito dos inscritos.</td>
+</tr>
+</tbody>
+</table>
+<h3 id="relacionamentos_1">Relacionamentos<a class="headerlink" href="#relacionamentos_1" title="Permanent link">&para;</a></h3>
+<table>
+<thead>
+<tr>
+<th>Origem</th>
+<th>Destino</th>
+<th>Descrição</th>
+<th>Tecnologia</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Visitante</td>
+<td>Site Estático</td>
+<td>Navega e preenche o formulário</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>Mantenedor</td>
+<td>Vercel</td>
+<td>Publica novas versões</td>
+<td>Git push / deploy</td>
+</tr>
+<tr>
+<td>Vercel</td>
+<td>Site Estático</td>
+<td>Hospeda e entrega os arquivos</td>
+<td>HTTPS / CDN</td>
+</tr>
+<tr>
+<td>Site Estático</td>
+<td>YouTube</td>
+<td>Incorpora o vídeo</td>
+<td>iframe / HTTPS</td>
+</tr>
+<tr>
+<td>Site Estático</td>
+<td>Google Imagens</td>
+<td>Carrega imagens</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>Site Estático</td>
+<td>Redes Sociais</td>
+<td>Links para os perfis</td>
+<td>HTTPS</td>
+</tr>
+<tr>
+<td>Site Estático</td>
+<td>API de Newsletter</td>
+<td>Envia a inscrição</td>
+<td>JSON / HTTPS POST</td>
+</tr>
+<tr>
+<td>API de Newsletter</td>
+<td>Banco de Assinantes</td>
+<td>Lê e grava assinantes</td>
+<td>SQL / driver</td>
+</tr>
+<tr>
+<td>API de Newsletter</td>
+<td>Serviço de E-mail</td>
+<td>Solicita o envio de e-mail</td>
+<td>API HTTPS / SMTP</td>
+</tr>
+</tbody>
+</table>
+<h3 id="decisoes-de-arquitetura">Decisões de arquitetura<a class="headerlink" href="#decisoes-de-arquitetura" title="Permanent link">&para;</a></h3>
+<ul>
+<li><strong>Site estático:</strong> o conteúdo (jogos, história, guia de hardware) muda pouco, então não precisa de servidor de aplicação. O deploy fica simples e as páginas são entregues pela CDN.</li>
+<li><strong>Hospedagem na Vercel:</strong> cada atualização enviada ao repositório vira uma nova versão do site, sem precisar mexer em servidor.</li>
+<li><strong>YouTube e Google Imagens:</strong> o vídeo e as imagens vêm de serviços externos, então o projeto não guarda mídia pesada.</li>
+</ul>
+<hr />
+<h2 id="arquivos-para-download">Arquivos para download<a class="headerlink" href="#arquivos-para-download" title="Permanent link">&para;</a></h2>
+<ul>
+<li><a href="../arquivos/C4_PSP_Legacy.pdf">Diagramas em PDF</a></li>
+<li><a href="../arquivos/C4_PSP_Legacy.drawio">Arquivo editável (draw.io)</a></li>
+</ul>
+
+
+
+
+
+
+
+
+
+
+
+
+                
+              </article>
+            </div>
+          
+          
+<script>var target=document.getElementById(location.hash.slice(1));target&&target.name&&(target.checked=target.name.startsWith("__tabbed_"))</script>
+        </div>
+        
+      </main>
+      
+        <footer class="md-footer">
+  
+  <div class="md-footer-meta md-typeset">
+    <div class="md-footer-meta__inner md-grid">
+      <div class="md-copyright">
+  
+  
+    Made with
+    <a href="https://squidfunk.github.io/mkdocs-material/" target="_blank" rel="noopener">
+      Material for MkDocs
+    </a>
+  
+</div>
+      
+    </div>
+  </div>
+</footer>
+      
+    </div>
+    <div class="md-dialog" data-md-component="dialog">
+      <div class="md-dialog__inner md-typeset"></div>
+    </div>
+    
+    
+    
+      
+      
+      <script id="__config" type="application/json">{"annotate": null, "base": "..", "features": ["navigation.sections", "content.code.copy"], "search": "../assets/javascripts/workers/search.a7633da7.min.js", "tags": null, "translations": {"clipboard.copied": "Copiado para \u00e1rea de transfer\u00eancia", "clipboard.copy": "Copiar para \u00e1rea de transfer\u00eancia", "search.result.more.one": "mais 1 nesta p\u00e1gina", "search.result.more.other": "# mais nesta p\u00e1gina", "search.result.none": "Nenhum documento encontrado", "search.result.one": "1 documento encontrado", "search.result.other": "# documentos encontrados", "search.result.placeholder": "Digite para iniciar a busca", "search.result.term.missing": "Ausente", "select.version": "Selecione a vers\u00e3o"}, "version": null}</script>
+    
+    
+      <script src="../assets/javascripts/bundle.a5f9d56c.min.js"></script>
+      
+    
+  </body>
+</html>
